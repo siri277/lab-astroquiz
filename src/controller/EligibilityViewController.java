@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.User;
 import utility.BasicEligibility;
-import utility.EligibiltyCheck;
+import utility.EligibilityCheck;
 
 @WebServlet(urlPatterns= {"/eligible"})
 public class EligibilityViewController extends HttpServlet {
@@ -29,7 +29,7 @@ public class EligibilityViewController extends HttpServlet {
 	}
 
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response, boolean spaceEligible) throws ServletException, IOException {
 
 		String name=request.getParameter("name");
 		String number=request.getParameter("Number");
@@ -45,9 +45,11 @@ public class EligibilityViewController extends HttpServlet {
 		user.setAge(age);
 		user.setHeight(height);
 		user.setWeight(weight);
+		EligibilityCheck eligibility = new EligibilityCheck ();
+		boolean spaceEligible1 = eligibility.basicEligibilityCheck(user);
 		
-		System.out.println(spaceEligible);
-			if(spaceEligible)
+		System.out.println(spaceEligible1);
+			if(spaceEligible1)
 			{
 				RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/quiz.jsp");
 				rd.forward(request, response);	
